@@ -15,8 +15,8 @@
 
 ### Association
 
-- has_many :
-- has_many :
+- has_many :items
+- has_many :orders
 
 ## items テーブル
 
@@ -25,7 +25,7 @@
 | name                | string       | null: false                    |
 | description         | text         | null: false                    |
 | price               | integer      | null: false                    |
-| user.               | references   | null: false, foreign_key: true |
+| user                | references   | null: false, foreign_key: true |
 | category_id         | integer      | null: false                    |
 | condition_id        | integer      | null: false                    |
 | shipping_fee_id     | integer      | null: false                    |
@@ -34,20 +34,22 @@
 
 ### Association
 
-- has_many :
-- belongs_to :
+- has_one :order
+- belongs_to :user
 
 ## orders テーブル
 
 | Column         | Type       | Options                        |
 | -------------- | ---------- | ------------------------------ |
 | user           | references | null: false, foreign_key: true |
-| item.          | references | null: false, foreign_key: true |
+| item           | references | null: false, foreign_key: true |
 
 ### Association
 
-- belongs_to :
-- belongs_to :
+- belongs_to :user
+- belongs_to :item
+- has_one :address
+
 
 ## addresses テーブル
 
@@ -64,5 +66,4 @@
 
 ### Association
 
-- belongs_to :
-- belongs_to :
+- belongs_to :order
