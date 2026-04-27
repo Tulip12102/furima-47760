@@ -1,9 +1,9 @@
 class OrderAddress
   include ActiveModel::Model
-  attr_accessor :postal_code, :prefecture_id, :city, :address_line, :building_name, :phone_number, :user_id, :item_id, :token
+  attr_accessor :postal_code, :prefecture_id, :city, :address_line, :building_name, :phone_number, :user_id, :item_id
 
   validates :postal_code, presence: true, format: {
-    with: /\A\d{3}-\d{4}\z/,
+    with: /\A\d{3}\d{4}\z/,
     message: 'Input correctly'
   }
 
@@ -16,7 +16,7 @@ class OrderAddress
     with: /\A\d{10,11}\z/,
     message: 'Input only number'
   }
-  validates :city, :address_line, :user_id, :item_id, :token, presence: true
+  validates :city, :address_line, :user_id, :item_id, presence: true
 
   def save
     order = Order.create(user_id: user_id, item_id: item_id)
