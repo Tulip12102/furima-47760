@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
   before_action :move_to_index, only: [:edit, :update, :destroy]
 
   def index
-    @items = Item.all.order(created_at: :desc)
+    @items = Item.left_outer_joins(:order).where(orders: { id: nil }).order(created_at: :desc)
   end
 
   def new
