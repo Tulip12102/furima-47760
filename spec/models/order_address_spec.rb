@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe OrderAddress, type: :model do
   before do
     @order_address = FactoryBot.build(:order_address, user_id: 1, item_id: 1)
+    @order_address.token = 'tok_abcdefghijk00000000000000000'
   end
 
   describe '購入情報の保存' do
@@ -12,6 +13,11 @@ RSpec.describe OrderAddress, type: :model do
       end
     end
     context '保存できない場合' do
+      it 'tokenが空では保存ができないこと' do
+        @order_address.token = nil
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include("Token can't be blank")
+      end
       it 'postal_codeが空では保存ができないこと' do
         @order_address.postal_code = nil
         @order_address.valid?
