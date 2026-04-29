@@ -3,7 +3,7 @@ class OrderAddress
   attr_accessor :postal_code, :prefecture_id, :city, :address_line, :building_name, :phone_number, :user_id, :item_id
 
   validates :postal_code, presence: true, format: {
-    with: /\A\d{3}\d{4}\z/,
+    with: /\A\d{3}-\d{4}\z/,
     message: 'Input correctly'
   }
 
