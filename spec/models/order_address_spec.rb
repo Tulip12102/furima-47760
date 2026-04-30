@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe OrderAddress, type: :model do
   before do
     @order_address = FactoryBot.build(:order_address, user_id: 1, item_id: 1)
-    @order_address.token = 'tok_abcdefghijk00000000000000000'
   end
 
   describe '購入情報の保存' do
