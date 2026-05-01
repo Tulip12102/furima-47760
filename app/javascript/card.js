@@ -37,7 +37,7 @@ const pay = () => {
       }
 
       const renderDom = document.getElementById("charge-form");
-      const tokenObj = `<input value=${token}" name='order_address[token]' type="hidden">`;
+      const tokenObj = `<input value="${token}" name="order_address[token]" type="hidden">`;
       renderDom.insertAdjacentHTML("beforeend", tokenObj);
 
       numberElement.clear();
