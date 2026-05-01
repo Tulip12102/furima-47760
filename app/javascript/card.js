@@ -24,11 +24,6 @@ const pay = () => {
 
   const numberForm = document.getElementById("number-form");
 
-  if (numberForm.textContent === "") {
-    form.submit();
-    return;
-  }
-
   payjp.createToken(numberElement).then(function (response) {
     if (response.error) {
       form.dataset.submitted = "false";
