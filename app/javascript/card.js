@@ -17,36 +17,43 @@ const pay = () => {
   cvcElement.mount('#cvc-form');
 
   form.addEventListener('submit', (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (form.dataset.submitted === "true") return;
-    form.dataset.submitted = "true";
+  if (form.dataset.submitted === "true") return;
+  form.dataset.submitted = "true";
 
-    payjp.createToken(numberElement).then(function (response) {
-      if (response.error) {
-        const errorElement = document.getElementById("card-error");
-        errorElement.textContent = response.error.message;
-        form.dataset.submitted = "false";
+  const numberForm = document.getElementById("number-form");
+
+  if (numberForm.textContent === "") {
+    form.submit();
+    return;
+  }
+
+  payjp.createToken(numberElement).then(function (response) {
+    if (response.error) {
+      form.dataset.submitted = "false";
+      form.submit();
       return;
-      }
+    }
 
     const token = response.id;
 
     if (!token) {
-        form.dataset.submitted = "false";
-      return;
-      }
-
-      const renderDom = document.getElementById("charge-form");
-      const tokenObj = `<input value="${token}" name="order_address[token]" type="hidden">`;
-      renderDom.insertAdjacentHTML("beforeend", tokenObj);
-
-      numberElement.clear();
-      expiryElement.clear();
-      cvcElement.clear();
+      form.dataset.submitted = "false";
       form.submit();
-    });
+      return;
+    }
+
+    const tokenObj = `<input value="${token}" name="order_address[token]" type="hidden">`;
+    form.insertAdjacentHTML("beforeend", tokenObj);
+
+    numberElement.clear();
+    expiryElement.clear();
+    cvcElement.clear();
+
+    form.submit();
   });
+});
 };
 
 window.addEventListener("turbo:load", pay);
