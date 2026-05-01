@@ -24,9 +24,10 @@ const pay = () => {
 
     payjp.createToken(numberElement).then(function (response) {
       if (response.error) {
-        console.log(response.error.message);
+        const errorElement = document.getElementById("card-error");
+        errorElement.textContent = response.error.message;
         form.dataset.submitted = "false";
-        return;
+      return;
       }
 
     const token = response.id;
