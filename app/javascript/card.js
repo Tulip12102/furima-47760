@@ -25,17 +25,25 @@ const pay = () => {
     payjp.createToken(numberElement).then(function (response) {
       if (response.error) {
         console.log(response.error.message);
+        form.dataset.submitted = "false";
+        return;
       }
 
-      const token = response.id;
+    const token = response.id;
+
+    if (!token) {
+        form.dataset.submitted = "false";
+      return;
+      }
+
       const renderDom = document.getElementById("charge-form");
-      const tokenObj = `<input value=${token} name='order_address[token]' type="hidden">`;
+      const tokenObj = `<input value=${token}" name='order_address[token]' type="hidden">`;
       renderDom.insertAdjacentHTML("beforeend", tokenObj);
 
       numberElement.clear();
       expiryElement.clear();
       cvcElement.clear();
-      document.getElementById("charge-form").submit();
+      form.submit();
     });
   });
 };
